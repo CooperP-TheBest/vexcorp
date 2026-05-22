@@ -5,6 +5,12 @@ type CTAButtonProps = {
   children: React.ReactNode;
   /** "primary" is filled crimson; "ghost" is an outlined steel button. */
   variant?: "primary" | "ghost";
+  /**
+   * "default" — standard size used across the site.
+   * "lg"      — wider, slightly taller, refined letter-spacing for
+   *             hero-level calls to action.
+   */
+  size?: "default" | "lg";
   className?: string;
 };
 
@@ -18,10 +24,16 @@ export default function CTAButton({
   href,
   children,
   variant = "primary",
+  size = "default",
   className = "",
 }: CTAButtonProps) {
+  const sizeStyles =
+    size === "lg"
+      ? "px-10 py-[15px] text-sm font-medium tracking-[0.06em]"
+      : "px-7 py-3.5 text-sm font-medium tracking-wide";
+
   const base =
-    "group inline-flex items-center justify-center gap-2.5 px-7 py-3.5 text-sm font-medium tracking-wide transition-all duration-300 ease-out";
+    `group inline-flex items-center justify-center gap-3 ${sizeStyles} transition-all duration-300 ease-out`;
 
   const styles =
     variant === "primary"

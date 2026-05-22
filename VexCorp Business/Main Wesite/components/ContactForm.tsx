@@ -51,39 +51,68 @@ export default function ContactForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-    // Placeholder for a future API route / mail integration.
+
+    // Build a clean mailto URL so the inquiry lands directly in Zoho Mail.
+    const subject = encodeURIComponent(
+      `VexCorp Inquiry — ${fields.business}`,
+    );
+    const body = encodeURIComponent(
+      [
+        `Name:     ${fields.name}`,
+        `Business: ${fields.business}`,
+        `Reply to: ${fields.email}`,
+        ``,
+        `---`,
+        ``,
+        fields.details,
+      ].join("\n"),
+    );
+
+    window.location.href =
+      `mailto:contact@vexcorp.co?subject=${subject}&body=${body}`;
+
     setSubmitted(true);
   };
 
   if (submitted) {
     return (
-      <div className="border border-crimson/40 bg-ink-graphite/60 p-10 text-center">
-        <p className="font-mono text-xs uppercase tracking-[0.22em] text-crimson-glow">
-          Inquiry received
-        </p>
+      <div className="border border-crimson/30 bg-ink-graphite/50 p-10 text-center shadow-[0_2px_12px_rgba(0,0,0,0.3)]">
+        {/* Status label */}
+        <span className="inline-block font-mono text-[10px] uppercase tracking-[0.22em] text-crimson/80">
+          Inquiry prepared
+        </span>
+
         <h3 className="mt-4 font-display text-2xl font-semibold text-mist">
           Thank you, {fields.name.split(" ")[0] || "there"}.
         </h3>
-        <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-mist-muted">
-          Your details have been captured. A member of VexCorp will follow up
-          shortly. For anything immediate, reach us directly at{" "}
+
+        <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-mist-soft">
+          Your email client should be opening with all details pre-filled.
+          Review the message and hit send — we&apos;ll get back to you shortly.
+        </p>
+
+        {/* Divider */}
+        <div className="rule mx-auto my-7 w-16" />
+
+        <p className="text-xs text-mist-muted">
+          Client didn&apos;t open?{" "}
           <a
             href="mailto:contact@vexcorp.co"
-            className="text-mist-soft underline decoration-crimson/50 underline-offset-4 transition-colors hover:text-crimson-glow"
+            className="text-mist-soft underline decoration-crimson/40 underline-offset-4 transition-colors duration-300 hover:text-crimson-glow hover:decoration-crimson/70"
           >
             contact@vexcorp.co
           </a>
-          .
         </p>
+
         <button
           type="button"
           onClick={() => {
             setFields(EMPTY);
             setSubmitted(false);
           }}
-          className="mt-8 border border-ink-line px-6 py-3 text-sm tracking-wide text-mist-soft transition-all duration-300 hover:border-crimson/60 hover:text-mist"
+          className="mt-8 border border-ink-line px-7 py-3 text-sm tracking-wide text-mist-muted transition-all duration-300 hover:border-crimson/50 hover:text-mist"
         >
-          Send another inquiry
+          Start a new inquiry
         </button>
       </div>
     );

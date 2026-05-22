@@ -27,8 +27,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="mt-5 text-sm leading-relaxed text-mist-muted">
-              A precision-focused digital agency building modern websites for
-              businesses that want to look serious online.
+              For businesses that value clarity, trust, and presentation.
             </p>
             <p className="mt-6 font-display text-lg font-semibold text-mist">
               We build with you.
@@ -61,12 +60,18 @@ export default function Footer() {
             </p>
             <a
               href="mailto:contact@vexcorp.co"
-              className="mt-5 inline-block text-sm text-mist-soft transition-colors duration-300 hover:text-crimson-glow"
+              className="group mt-5 inline-flex items-center gap-2 text-sm text-mist-soft underline decoration-transparent underline-offset-4 transition-all duration-300 hover:text-crimson-glow hover:decoration-crimson/40"
             >
               contact@vexcorp.co
+              <span
+                className="opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                aria-hidden="true"
+              >
+                ↗
+              </span>
             </a>
-            <p className="mt-3 text-sm text-mist-muted">
-              Start a conversation about your project.
+            <p className="mt-3 text-xs leading-relaxed text-mist-muted">
+              We respond within 24 hours.
             </p>
           </div>
         </div>

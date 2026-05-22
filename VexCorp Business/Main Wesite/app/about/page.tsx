@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 const PARAGRAPHS = [
   "VexCorp is a modern digital company focused on building clean, high-performance websites for businesses looking to establish a stronger online presence.",
-  "Inspired by aerospace precision and modern interface systems, VexCorp approaches digital design with a focus on clarity, structure, and long-term scalability.",
+  "Inspired by aerospace precision and modern interface systems, VexCorp approaches digital design with a focus on clarity, structure, and long-term expansion.",
   "We build with our clients to create digital experiences that evolve alongside the businesses behind them.",
   "Additional systems, tools, and platform capabilities are actively being developed as VexCorp continues to expand.",
 ];

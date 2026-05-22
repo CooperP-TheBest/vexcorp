@@ -26,16 +26,22 @@ export default function MascotPlaceholder({
 
   // Radial mask — keeps the jet core solid, dissolves edges and the
   // boost trail organically into the background.
+  // Hero: center offset to 56% (slightly right of midpoint) so the left
+  // edge — facing the text column — fades more gradually, letting the
+  // glow and trail bleed toward copy for a unified composition.
   const maskValue = hero
-    ? "radial-gradient(ellipse 72% 74% at 50% 50%, #000 54%, transparent 100%)"
+    ? "radial-gradient(ellipse 92% 90% at 56% 50%, #000 62%, transparent 100%)"
     : "radial-gradient(ellipse 74% 76% at 50% 50%, #000 62%, transparent 100%)";
 
   return (
     <div className={`relative aspect-[3/2] w-full ${className}`}>
-      {/* Cinematic crimson bloom — homepage only, restrained */}
+      {/* Cinematic crimson bloom — homepage only.
+          Positioned slightly left of centre and wider than the container so
+          the glow bleeds past the left edge into the text column, unifying
+          the composition without the aircraft itself overlapping copy. */}
       {hero && (
         <div
-          className="pointer-events-none absolute left-1/2 top-1/2 h-[56%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse,rgba(158,27,47,0.12),transparent_70%)] blur-3xl"
+          className="pointer-events-none absolute left-[40%] top-1/2 h-[80%] w-[120%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse,rgba(158,27,47,0.13),transparent_65%)] blur-3xl"
           aria-hidden="true"
         />
       )}
@@ -46,7 +52,7 @@ export default function MascotPlaceholder({
         fill
         sizes={
           hero
-            ? "(max-width: 1024px) 96vw, 62vw"
+            ? "(max-width: 1024px) 96vw, 78vw"
             : "(max-width: 1024px) 84vw, 52vw"
         }
         priority={hero}

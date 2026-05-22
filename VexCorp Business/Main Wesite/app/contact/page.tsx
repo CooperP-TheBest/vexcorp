@@ -35,17 +35,27 @@ export default function ContactPage() {
         </Reveal>
 
         {/* Direct contact */}
-        <Reveal delay={180} className="mt-10 text-center">
-          <div className="rule mx-auto mb-8 w-24" />
-          <p className="font-mono text-xs uppercase tracking-[0.22em] text-mist-muted">
-            Direct Contact
-          </p>
-          <a
-            href="mailto:contact@vexcorp.co"
-            className="mt-3 inline-block font-display text-lg text-mist transition-colors duration-300 hover:text-crimson-glow"
-          >
-            contact@vexcorp.co
-          </a>
+        <Reveal delay={180} className="mt-12">
+          <div className="border border-ink-line/60 bg-ink-graphite/30 px-8 py-7 text-center">
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-mist-muted">
+              Prefer to reach out directly?
+            </p>
+            <a
+              href="mailto:contact@vexcorp.co"
+              className="group mt-4 inline-flex items-center gap-2.5 font-display text-lg font-medium text-mist underline decoration-crimson/30 underline-offset-4 transition-all duration-300 hover:text-crimson-glow hover:decoration-crimson/60"
+            >
+              contact@vexcorp.co
+              <span
+                className="translate-x-0 opacity-50 transition-all duration-300 group-hover:translate-x-0.5 group-hover:opacity-100"
+                aria-hidden="true"
+              >
+                ↗
+              </span>
+            </a>
+            <p className="mt-3 text-xs text-mist-muted">
+              We respond to all inquiries within 24 hours.
+            </p>
+          </div>
         </Reveal>
       </div>
     </section>
