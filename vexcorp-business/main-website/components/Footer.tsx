@@ -70,7 +70,13 @@ export default function Footer() {
                 ↗
               </span>
             </a>
-            <p className="mt-3 text-xs leading-relaxed text-mist-muted">
+            <a
+              href="tel:+18065000441"
+              className="mt-1.5 block text-sm text-mist-muted transition-colors duration-300 hover:text-mist-soft"
+            >
+              (806) 500-0441
+            </a>
+            <p className="mt-4 text-xs leading-relaxed text-mist-muted">
               We respond within 24 hours.
             </p>
           </div>

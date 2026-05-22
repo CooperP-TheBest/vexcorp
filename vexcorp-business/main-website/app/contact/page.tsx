@@ -52,7 +52,13 @@ export default function ContactPage() {
                 ↗
               </span>
             </a>
-            <p className="mt-3 text-xs text-mist-muted">
+            <a
+              href="tel:+18065000441"
+              className="mt-2 block font-display text-base text-mist-soft transition-colors duration-300 hover:text-mist"
+            >
+              (806) 500-0441
+            </a>
+            <p className="mt-4 text-xs text-mist-muted">
               We respond to all inquiries within 24 hours.
             </p>
           </div>
