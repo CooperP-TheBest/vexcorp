@@ -12,10 +12,12 @@ export const contentType = "image/png";
 /*  Asset reference                                                    */
 /* ------------------------------------------------------------------ */
 
-// Absolute URL — edge runtime fetches this from Vercel's CDN at
-// render time.  Local dev also works because the live site is up.
+// Using the GitHub raw URL avoids a self-referential Vercel CDN fetch
+// (which can fail on cold render) while remaining publicly accessible
+// from edge functions, local dev, and social-media crawlers.
 const JET_SRC =
-  "https://vexcorp.co/images/Hero/vexcorp-jet.png";
+  "https://raw.githubusercontent.com/CooperP-TheBest/vexcorp/main" +
+  "/vexcorp-business/main-website/public/images/Hero/vexcorp-jet.png";
 
 /* ------------------------------------------------------------------ */
 /*  OG image                                                           */
@@ -25,13 +27,18 @@ const JET_SRC =
  * Site-wide Open Graph / social-preview image.
  *
  * Composition (bottom → top):
- *   1. Solid ink-black canvas   — #08080a, 1200 × 1200
- *   2. Crimson bloom            — faint radial glow behind the jet
- *   3. Jet PNG                  — centered, 1000 × 1000
- *   4. Vignette overlay         — radial gradient that blends the
- *                                  gray PNG edges to black so the
- *                                  aircraft dissolves cleanly into
- *                                  the dark background
+ *   1. Solid ink-black canvas   — #08080a, 1200 × 1200 square
+ *   2. Crimson bloom            — warm radial glow seated behind jet
+ *   3. Jet PNG                  — centered 1000 × 1000, objectFit contain
+ *   4. Vignette overlay         — large transparent core (full jet visible),
+ *                                  gentle fade to black only at canvas edges
+ *
+ * Geometry notes:
+ *   Jet content inside the 1000 × 1000 box is ~1000 × 667 (landscape).
+ *   From canvas centre the jet body spans ±500 px horizontally / ±333 px
+ *   vertically.  The vignette transparent zone covers 55 % of the gradient
+ *   ray (≈ 467 px), so the entire jet body stays visible; only the outer
+ *   gray PNG background bleeds into the dark transition ring.
  */
 export default function Image() {
   return new ImageResponse(
@@ -52,24 +59,20 @@ export default function Image() {
         <div
           style={{
             position: "absolute",
-            top:      0,
-            left:     0,
-            right:    0,
-            bottom:   0,
+            top:    0,
+            left:   0,
+            right:  0,
+            bottom: 0,
             background:
-              "radial-gradient(ellipse 72% 72% at 50% 50%," +
-              "rgba(158,27,47,0.24) 0%," +
-              "rgba(158,27,47,0.06) 45%," +
-              "transparent 68%)",
+              "radial-gradient(circle at center," +
+              "rgba(158,27,47,0.30) 0%," +
+              "rgba(158,27,47,0.12) 38%," +
+              "transparent 62%)",
             display: "flex",
           }}
         />
 
-        {/* ── Layer 2: Jet ────────────────────────────────────── */}
-        {/* 1000 × 1000 gives 100 px black breathing room on every
-            side within the 1200 × 1200 canvas. objectFit:contain
-            letterboxes the landscape jet within the square box —
-            the black canvas fills the empty strips. */}
+        {/* ── Layer 2: Jet ─────────────────────────────────────── */}
         <img
           src={JET_SRC}
           width={1000}
@@ -77,24 +80,24 @@ export default function Image() {
           style={{ objectFit: "contain" }}
         />
 
-        {/* ── Layer 3: Vignette ───────────────────────────────── */}
-        {/* Mirrors the CSS mask used in MascotPlaceholder.
-            Keeps the jet body fully visible (transparent core),
-            then graduates to solid #08080a at the canvas edges,
-            eliminating the gray PNG background. */}
+        {/* ── Layer 3: Vignette ────────────────────────────────── */}
+        {/* Transparent core = 55 % of gradient ray ≈ 467 px.
+            The jet body (max 500 px from centre) is nearly fully
+            preserved; the darkening only reaches the gray PNG
+            background strips outside the aircraft. */}
         <div
           style={{
             position: "absolute",
-            top:      0,
-            left:     0,
-            right:    0,
-            bottom:   0,
+            top:    0,
+            left:   0,
+            right:  0,
+            bottom: 0,
             background:
-              "radial-gradient(ellipse at 50% 50%," +
-              "transparent 48%," +
-              "rgba(8,8,10,0.50) 65%," +
-              "rgba(8,8,10,0.88) 80%," +
-              "#08080a 92%)",
+              "radial-gradient(circle at center," +
+              "transparent 55%," +
+              "rgba(8,8,10,0.60) 74%," +
+              "rgba(8,8,10,0.92) 87%," +
+              "#08080a 96%)",
             display: "flex",
           }}
         />
