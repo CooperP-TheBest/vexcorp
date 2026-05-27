@@ -1,23 +1,18 @@
 import { ImageResponse } from "next/og";
+import { readFileSync } from "fs";
+import { join } from "path";
 
 /* ------------------------------------------------------------------ */
 /*  Route-segment config                                               */
 /* ------------------------------------------------------------------ */
 
-export const runtime     = "edge";
+// Node.js runtime — allows fs.readFileSync so the jet PNG is read
+// directly from the serverless bundle (included via outputFileTracingIncludes
+// in next.config.mjs) without any outbound network request.
+// This is the only approach that works reliably on Vercel: edge-runtime
+// fetches to external URLs silently fail during Satori rendering.
 export const size        = { width: 1200, height: 1200 };
 export const contentType = "image/png";
-
-/* ------------------------------------------------------------------ */
-/*  Asset reference                                                    */
-/* ------------------------------------------------------------------ */
-
-// Using the GitHub raw URL avoids a self-referential Vercel CDN fetch
-// (which can fail on cold render) while remaining publicly accessible
-// from edge functions, local dev, and social-media crawlers.
-const JET_SRC =
-  "https://raw.githubusercontent.com/CooperP-TheBest/vexcorp/main" +
-  "/vexcorp-business/main-website/public/images/Hero/vexcorp-jet.png";
 
 /* ------------------------------------------------------------------ */
 /*  OG image                                                           */
@@ -28,19 +23,33 @@ const JET_SRC =
  *
  * Composition (bottom → top):
  *   1. Solid ink-black canvas   — #08080a, 1200 × 1200 square
- *   2. Crimson bloom            — warm radial glow seated behind jet
- *   3. Jet PNG                  — centered 1000 × 1000, objectFit contain
+ *   2. Crimson bloom            — warm radial glow seated behind the jet
+ *   3. Jet PNG                  — centered 1000 × 1000, base64-embedded
  *   4. Vignette overlay         — large transparent core (full jet visible),
  *                                  gentle fade to black only at canvas edges
  *
- * Geometry notes:
- *   Jet content inside the 1000 × 1000 box is ~1000 × 667 (landscape).
+ * Geometry:
+ *   Jet content inside the 1000 × 1000 box ≈ 1000 × 667 (landscape aspect).
  *   From canvas centre the jet body spans ±500 px horizontally / ±333 px
- *   vertically.  The vignette transparent zone covers 55 % of the gradient
- *   ray (≈ 467 px), so the entire jet body stays visible; only the outer
+ *   vertically.  Vignette transparent zone covers 55 % of the gradient ray
+ *   (≈ 467 px), so the full jet body stays visible while only the outer
  *   gray PNG background bleeds into the dark transition ring.
  */
 export default function Image() {
+  // Read the jet PNG from disk and embed as a base64 data-URI.
+  // Satori renders it directly from memory — no network request.
+  let jetSrc: string;
+  try {
+    const buf = readFileSync(
+      join(process.cwd(), "public/images/Hero/vexcorp-jet.png"),
+    );
+    jetSrc = `data:image/png;base64,${buf.toString("base64")}`;
+  } catch {
+    // Fallback: 1 × 1 transparent GIF — shows black canvas + bloom only.
+    jetSrc =
+      "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+  }
+
   return new ImageResponse(
     (
       <div
@@ -73,18 +82,21 @@ export default function Image() {
         />
 
         {/* ── Layer 2: Jet ─────────────────────────────────────── */}
+        {/* 1000 × 1000 box inside 1200 × 1200 canvas → 100 px black
+            breathing room on every side. objectFit:contain letterboxes
+            the landscape jet; the canvas black fills the strips above
+            and below the aircraft. */}
         <img
-          src={JET_SRC}
+          src={jetSrc}
           width={1000}
           height={1000}
           style={{ objectFit: "contain" }}
         />
 
         {/* ── Layer 3: Vignette ────────────────────────────────── */}
-        {/* Transparent core = 55 % of gradient ray ≈ 467 px.
-            The jet body (max 500 px from centre) is nearly fully
-            preserved; the darkening only reaches the gray PNG
-            background strips outside the aircraft. */}
+        {/* Large transparent core keeps the jet fully visible.
+            Darkening only reaches the outer gray PNG background
+            and canvas corners. */}
         <div
           style={{
             position: "absolute",
