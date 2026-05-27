@@ -18,11 +18,40 @@ export const metadata: Metadata = {
     "responsive design",
     "website redesign",
   ],
+
+  /* ── Favicon ──────────────────────────────────────────────────── */
+  // app/icon.svg is picked up automatically by Next.js and injected
+  // as <link rel="icon" type="image/svg+xml"> — no explicit entry
+  // needed here.  The lines below are kept as documentation only.
+  // icons: { icon: "/icon.svg" },
+
+  /* ── Open Graph ───────────────────────────────────────────────── */
+  // app/opengraph-image.tsx is auto-discovered by Next.js and added
+  // as og:image.  The explicit images array below ensures Twitter
+  // also picks it up via the og:image fallback, and gives downstream
+  // tools a stable path for card debuggers.
   openGraph: {
-    title: "VexCorp — Precision-Focused Digital Agency",
-    description:
-      "Modern websites for businesses that want to look serious online. We build with you.",
-    type: "website",
+    title:       "VexCorp — Precision-Focused Digital Agency",
+    description: "Modern websites for businesses that want to look serious online. We build with you.",
+    type:        "website",
+    url:         "https://vexcorp.co",
+    siteName:    "VexCorp",
+    images: [
+      {
+        url:    "/opengraph-image",
+        width:  1200,
+        height: 1200,
+        alt:    "VexCorp — Precision-Focused Digital Agency",
+      },
+    ],
+  },
+
+  /* ── Twitter / X card ─────────────────────────────────────────── */
+  twitter: {
+    card:        "summary_large_image",
+    title:       "VexCorp — Precision-Focused Digital Agency",
+    description: "Modern websites for businesses that want to look serious online. We build with you.",
+    images:      ["/opengraph-image"],
   },
 };
 
