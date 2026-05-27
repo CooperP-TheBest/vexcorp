@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Near-black background — matches ink-black (#08080a) -->
+  <rect width="32" height="32" fill="#08080a"/>
+  <!--
+    VexCorp mark — identical paths to Mark.tsx.
+    Stroke bumped from 1.4 → 2 so the glyph stays legible
+    at 16 × 16 px (browser tab) and 32 × 32 px (taskbar).
+    Colour uses crimson-glow (#c43141) rather than the base
+    crimson (#9e1b2f) for better contrast at small sizes.
+  -->
+  <path
+    d="M16 3 L29 27 L16 21 L3 27 Z"
+    fill="none"
+    stroke="#c43141"
+    stroke-width="2"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M16 11 L16 21"
+    fill="none"
+    stroke="#c43141"
+    stroke-width="2"
+    stroke-linecap="round"
+    opacity="0.55"
+  />
+</svg>
