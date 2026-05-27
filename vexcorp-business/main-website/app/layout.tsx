@@ -26,10 +26,11 @@ export const metadata: Metadata = {
   // icons: { icon: "/icon.svg" },
 
   /* ── Open Graph ───────────────────────────────────────────────── */
-  // app/opengraph-image.tsx is auto-discovered by Next.js and added
-  // as og:image.  The explicit images array below ensures Twitter
-  // also picks it up via the og:image fallback, and gives downstream
-  // tools a stable path for card debuggers.
+  // Static 1200 × 1200 PNG pre-rendered on the build machine.
+  // Jet centered on ink-black canvas with crimson glow and vignette.
+  // Using a static file is more reliable than a dynamic edge route
+  // because it requires no serverless function, no network fetches,
+  // and is immediately available on Vercel's CDN after deploy.
   openGraph: {
     title:       "VexCorp — Precision-Focused Digital Agency",
     description: "Modern websites for businesses that want to look serious online. We build with you.",
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
     siteName:    "VexCorp",
     images: [
       {
-        url:    "/opengraph-image",
+        url:    "/og-image.png",
         width:  1200,
         height: 1200,
         alt:    "VexCorp — Precision-Focused Digital Agency",
@@ -51,7 +52,7 @@ export const metadata: Metadata = {
     card:        "summary_large_image",
     title:       "VexCorp — Precision-Focused Digital Agency",
     description: "Modern websites for businesses that want to look serious online. We build with you.",
-    images:      ["/opengraph-image"],
+    images:      ["/og-image.png"],
   },
 };
 
