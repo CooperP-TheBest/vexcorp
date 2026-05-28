@@ -26,7 +26,7 @@ export default function HomePage() {
   return (
     <>
       {/* ============================== HERO ============================== */}
-      <section className="relative border-b border-ink-line/60">
+      <section className="relative border-b border-ink-line/60 bg-[#08080a]">
         {/* Atmospheric vignette — very faint crimson breath at top */}
         <div
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_55%_at_50%_-5%,rgba(158,27,47,0.06),transparent_70%)]"
