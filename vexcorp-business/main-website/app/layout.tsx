@@ -19,18 +19,26 @@ export const metadata: Metadata = {
     "website redesign",
   ],
 
-  /* ── Favicon ──────────────────────────────────────────────────── */
-  // app/icon.svg is picked up automatically by Next.js and injected
-  // as <link rel="icon" type="image/svg+xml"> — no explicit entry
-  // needed here.  The lines below are kept as documentation only.
-  // icons: { icon: "/icon.svg" },
+  /* ── Favicon / icons ─────────────────────────────────────────── */
+  // Explicit entries ensure Google Search picks up the correct icon.
+  // - favicon.ico  : PNG-in-ICO (32×32) — Google's preferred format
+  // - icon.svg     : Next.js file-convention, modern browsers
+  // - apple-touch-icon.png : iOS home-screen (180×180)
+  icons: {
+    icon: [
+      { url: "/favicon.ico",    sizes: "32x32", type: "image/x-icon" },
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png"    },
+      { url: "/icon.svg",                        type: "image/svg+xml" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+  },
 
   /* ── Open Graph ───────────────────────────────────────────────── */
-  // Static 1200 × 1200 PNG pre-rendered on the build machine.
-  // Jet centered on ink-black canvas with crimson glow and vignette.
-  // Using a static file is more reliable than a dynamic edge route
-  // because it requires no serverless function, no network fetches,
-  // and is immediately available on Vercel's CDN after deploy.
+  // Absolute URL ensures crawlers (Google, Facebook, Twitter) always
+  // resolve the image even if they ignore metadataBase.
   openGraph: {
     title:       "VexCorp — Precision-Focused Digital Agency",
     description: "Modern websites for businesses that want to look serious online. We build with you.",
@@ -39,7 +47,7 @@ export const metadata: Metadata = {
     siteName:    "VexCorp",
     images: [
       {
-        url:    "/og-image.png",
+        url:    "https://vexcorp.co/vexcorp-og.png",
         width:  1200,
         height: 1200,
         alt:    "VexCorp — Precision-Focused Digital Agency",
@@ -52,7 +60,7 @@ export const metadata: Metadata = {
     card:        "summary_large_image",
     title:       "VexCorp — Precision-Focused Digital Agency",
     description: "Modern websites for businesses that want to look serious online. We build with you.",
-    images:      ["/og-image.png"],
+    images:      ["https://vexcorp.co/vexcorp-og.png"],
   },
 };
 
